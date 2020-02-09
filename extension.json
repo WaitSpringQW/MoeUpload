@@ -55,7 +55,7 @@
     }
   },
   "ResourceFileModulePaths": {
-    "localBasePath":  __DIR__ . "/MoeUpload",
+    "localBasePath":  "",
     "remoteExtPath": "MoeUpload"
   },
   "manifest_version": 2
