@@ -11,15 +11,18 @@
       "i18n"
     ]
   },
+  "AutoloadClasses": {
+    "MoeUpload\\Hooks": "MoeUpload/MoeUpload.php"
+  },
   "Hooks": {
     "UploadFormInitDescriptor": [
-      "onUploadFormInitDescriptor"
+      "MoeUpload\\Hooks::onUploadFormInitDescriptor"
     ],
     "UploadForm:BeforeProcessing": [
-      "BeforeProcessing"
+      "MoeUpload\\Hooks::BeforeProcessing"
     ],
     "UploadForm:initial": [
-      "MoeUploadUploadForminitial"
+      "MoeUpload\\Hooks::MoeUploadUploadForminitial"
     ]
   },
   "ResourceModules": {
@@ -52,7 +55,7 @@
     }
   },
   "ResourceFileModulePaths": {
-    "localBasePath": "",
+    "localBasePath":  __DIR__ . "/MoeUpload",
     "remoteExtPath": "MoeUpload"
   },
   "manifest_version": 2
