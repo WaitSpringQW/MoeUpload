@@ -1,17 +1,18 @@
 <?php   
 //在上传界面增加三个字段
-
+namespace MoeUpload;
 if (!defined('MEDIAWIKI')) {
 	exit;
 }
 
-function MoeUploadUploadForminitial ( $outputPage ) {
+class Hooks {
+	public static function MoeUploadUploadForminitial ( $outputPage ) {
 global $wgOut;
 $wgOut -> addModules( 'ext.MoeUpload' );
 return true;
 }
 
-function onUploadFormInitDescriptor( &$descriptor ) { 
+public static function onUploadFormInitDescriptor( &$descriptor ) { 
 	$descriptor += array(
 		'CharName' => array(
 			'type' => 'text',
@@ -41,7 +42,7 @@ function onUploadFormInitDescriptor( &$descriptor ) {
 	return true;
 }
 
-function BeforeProcessing( &$uploadFormObj ) {
+public static function BeforeProcessing( &$uploadFormObj ) {
 	if( $uploadFormObj->mRequest->getFileName( 'wpUploadFile' ) !== null || $uploadFormObj->mRequest->getFileName( 'wpUploadFileURL' ) !== null) {
 	  $uploadFormObj->mAuthor            = $uploadFormObj->mRequest->getText( 'wpAuthor' );
 	  $uploadFormObj->mSrcUrl            = $uploadFormObj->mRequest->getText( 'wpSrcUrl' );
@@ -73,6 +74,7 @@ function BeforeProcessing( &$uploadFormObj ) {
 	}
 
 	return $uploadFormObj;
+}
 }
 
 ?>
