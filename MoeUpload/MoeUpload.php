@@ -1,56 +1,18 @@
 <?php   
 //在上传界面增加三个字段
-
+namespace MoeUpload;
 if (!defined('MEDIAWIKI')) {
 	exit;
 }
 
-$wgExtensionCredits['specialpage'][] = array(
-	'path'           => __FILE__,
-	'name'           => 'MoeUpload',
-	'descriptionmsg' => 'moemoeQdec',
-	'author'         => array('March','nybux.tsui','XpAhH','baskice','dreamnong',"AnnAngela",'Xzonn'),
-	'url'            => 'https://github.com/moegirlwiki/MoeUpload',
-	'version'        => '1.2.2'
-);
-
-$wgExtensionMessagesFiles['moemoeQ'] = dirname(__FILE__).'/'. 'MoeUpload.i18n.php';
-
-$wgHooks['UploadFormInitDescriptor'][] = 'onUploadFormInitDescriptor';
-$wgHooks['UploadForm:BeforeProcessing'][] = 'BeforeProcessing';
-
-$wgResourceModules['ext.MoeUpload'] = array(
-	// JavaScript and CSS styles. To combine multiple files, just list them as an array.
-	'scripts' => array( 'MoeUpload.js' ),
-	'styles' => 'MoeUpload.css',
- 
- 
-	// You need to declare the base path of the file paths in 'scripts' and 'styles'
-	'localBasePath' => __DIR__,
-	// ... and the base from the browser as well. For extensions this is made easy,
-	// you can use the 'remoteExtPath' property to declare it relative to where the wiki
-	// has $wgExtensionAssetsPath configured:
-	'remoteExtPath' => 'MoeUpload'
-);
-
-
-$wgHooks['UploadForm:initial'][] = 'MoeUploadUploadForminitial';
-
-
-function MoeUploadUploadForminitial ( $outputPage ) {
+class Hooks {
+	public static function MoeUploadUploadForminitial ( $outputPage ) {
 global $wgOut;
 $wgOut -> addModules( 'ext.MoeUpload' );
 return true;
 }
 
-function onBeforePageDisplay( &$out, &$skin ) {
-	global $wgScriptPath;
-	$path = "$wgScriptPath/extensions/MoeUpload/MoeUpload.js";
-	$out->addScriptFile( $path );
-	return true;
-}
-
-function onUploadFormInitDescriptor( &$descriptor ) { 
+public static function onUploadFormInitDescriptor( &$descriptor ) { 
 	$descriptor += array(
 		'CharName' => array(
 			'type' => 'text',
@@ -80,8 +42,8 @@ function onUploadFormInitDescriptor( &$descriptor ) {
 	return true;
 }
 
-function BeforeProcessing( &$uploadFormObj ) {
-	if( $uploadFormObj->mRequest->getFileName( 'wpUploadFile' ) !== null || $uploadFormObj->mRequest->getText( 'wpUploadFileURL' ) !== null) {
+public static function BeforeProcessing( &$uploadFormObj ) {
+	if( $uploadFormObj->mRequest->getFileName( 'wpUploadFile' ) !== null || $uploadFormObj->mRequest->getFileName( 'wpUploadFileURL' ) !== null) {
 	  $uploadFormObj->mAuthor            = $uploadFormObj->mRequest->getText( 'wpAuthor' );
 	  $uploadFormObj->mSrcUrl            = $uploadFormObj->mRequest->getText( 'wpSrcUrl' );
 	  $uploadFormObj->mCharName          = $uploadFormObj->mRequest->getText( 'wpCharName' );
@@ -113,6 +75,7 @@ function BeforeProcessing( &$uploadFormObj ) {
 	}
 
 	return $uploadFormObj;
+}
 }
 
 ?>
