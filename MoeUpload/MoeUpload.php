@@ -9,9 +9,9 @@ $wgExtensionCredits['specialpage'][] = array(
 	'path'           => __FILE__,
 	'name'           => 'MoeUpload',
 	'descriptionmsg' => 'moemoeQdec',
-	'author'         => array('March','nybux.tsui','XpAhH','baskice','dreamnong',"AnnAngela"),
+	'author'         => array('March','nybux.tsui','XpAhH','baskice','dreamnong',"AnnAngela",'Xzonn'),
 	'url'            => 'https://github.com/moegirlwiki/MoeUpload',
-	'version'        => '1.2.1'
+	'version'        => '1.2.2'
 );
 
 $wgExtensionMessagesFiles['moemoeQ'] = dirname(__FILE__).'/'. 'MoeUpload.i18n.php';
@@ -81,7 +81,7 @@ function onUploadFormInitDescriptor( &$descriptor ) {
 }
 
 function BeforeProcessing( &$uploadFormObj ) {
-	if( $uploadFormObj->mRequest->getFileName( 'wpUploadFile' ) !== null || $uploadFormObj->mRequest->getFileName( 'wpUploadFileURL' ) !== null) {
+	if( $uploadFormObj->mRequest->getFileName( 'wpUploadFile' ) !== null || $uploadFormObj->mRequest->getText( 'wpUploadFileURL' ) !== null) {
 	  $uploadFormObj->mAuthor            = $uploadFormObj->mRequest->getText( 'wpAuthor' );
 	  $uploadFormObj->mSrcUrl            = $uploadFormObj->mRequest->getText( 'wpSrcUrl' );
 	  $uploadFormObj->mCharName          = $uploadFormObj->mRequest->getText( 'wpCharName' );
@@ -100,11 +100,12 @@ function BeforeProcessing( &$uploadFormObj ) {
 	      }
 	  }
 
-	  foreach (explode(" ", $uploadFormObj->mCharName) as $catagory) {
-	      if ($catagory != "") {
-	          $uploadFormObj->mComment .= "[[分类:$catagory]]";
+	  foreach (explode(" ", $uploadFormObj->mCharName) as $category) {
+	      if ($category != "") {
+	          $uploadFormObj->mComment .= "[[分类:$category]]";
 	      }
 	  }
+
 	  if ($uploadFormObj->mSrcUrl != "") {
 	      $uploadFormObj->mComment .= "源地址:".$uploadFormObj->mSrcUrl;
 	  }
